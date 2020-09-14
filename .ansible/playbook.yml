@@ -6,6 +6,6 @@
 
   tasks:
     - include_role:
-      - role: geerlingguy.docker
+        name: geerlingguy.docker
         docker_users:
           - ubuntu
