@@ -18,8 +18,8 @@ jobs:
           inventoryFile: ".ansible/inventory/hosts"
           # requirementsFile: ".ansible/requirements.yml"
           # rolesPath: ".ansible/playbooks/roles"
-          keyFile: ".ansible/id_rsa"
-          keyFileVaultPass: ${{ secrets.KEYFILE_VAULT_PASS }}
+          keyFile: ".ansible/key/id_rsa"
+          keyFileVaultPass: ${{ secrets.VAULT_SECRET }}
           # extraFile: ".ansible/extra.yml"
           # extraVars: "-e my_first_extra=${{ github.actor }} -e my_second_one=${{ github.sha }}"
           verbosity: "vvv"
