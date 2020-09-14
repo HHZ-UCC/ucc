@@ -17,7 +17,7 @@ jobs:
           playbookName: ".ansible/playbook.yml"
           inventoryFile: ".ansible/inventory/hosts"
           requirementsFile: ".ansible/requirements.yml"
-          # rolesPath: ".ansible/playbooks/roles"
+          rolesPath: ".ansible/roles"
           keyFile: ".ansible/key/id_rsa"
           keyFileVaultPass: ${{ secrets.VAULT_SECRET }}
           # extraFile: ".ansible/extra.yml"
