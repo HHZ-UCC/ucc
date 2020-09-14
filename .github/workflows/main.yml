@@ -15,11 +15,11 @@ jobs:
           ANSIBLE_FORCE_COLOR: true
         with:
           playbookName: ".ansible/playbook.yml"
-          inventoryFile: ".ansible/inventory/local.yml"
+          inventoryFile: ".ansible/inventory/hosts"
           # requirementsFile: ".ansible/requirements.yml"
           # rolesPath: ".ansible/playbooks/roles"
-          # keyFile: ".ansible/random-ssh-key.pem"
-          # keyFileVaultPass: ${{ secrets.KEYFILE_VAULT_PASS }}
+          keyFile: ".ansible/id_rsa"
+          keyFileVaultPass: ${{ secrets.KEYFILE_VAULT_PASS }}
           # extraFile: ".ansible/extra.yml"
           # extraVars: "-e my_first_extra=${{ github.actor }} -e my_second_one=${{ github.sha }}"
           verbosity: "vvv"
