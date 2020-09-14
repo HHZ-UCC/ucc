@@ -1,4 +1,8 @@
 ---
+  
+- hosts: all
+  #remote_user: root
 
-- debug:
-  msg: System hello world
+  tasks:
+  - name: find disk space available.
+    command: df -hPT
