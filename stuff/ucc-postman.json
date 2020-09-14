@@ -1,0 +1,76 @@
+{
+	"info": {
+		"_postman_id": "bf02e50e-7ca8-4473-b353-53389ed83a95",
+		"name": "UCC",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "{{ucc_root}}/api/v1/{{device_token}}/attributes",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"status\": \"ok\",\r\n\t\"cartridge\": \"50\",\r\n    \"paper\":  \"67\"\r\n}"
+				},
+				"url": {
+					"raw": "{{ucc_root}}/api/v1/{{device_token}}/attributes",
+					"host": [
+						"{{ucc_root}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"{{device_token}}",
+						"attributes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{ucc_root}}/service/v1/graphql",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n\t\"query\" : \"mutation CreateDevice{  insert_device(objects: {external_id: \\\"Test Device\\\", location: \\\"Obstabteilung\\\", name: \\\"Test Device\\\", type: \\\"default\\\", tickets: {data: {description: \\\"TODO ticket description eintragen\\\", status: \\\"Offen\\\"}}}, on_conflict: {constraint: device_external_id_key, update_columns: [location, name, type]}) {    returning {      id      external_id      name      type      tickets {        id        description        status      }    }  }}\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{ucc_root}}/service/v1/graphql",
+					"host": [
+						"{{ucc_root}}"
+					],
+					"path": [
+						"service",
+						"v1",
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

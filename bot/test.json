@@ -1,0 +1,177 @@
+{
+    "type": "AdaptiveCard",
+    "version": "1.2",
+    "body": [
+        {
+            "type": "Container",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "Drucker patrone ausgegangen",
+                    "horizontalAlignment": "Center",
+                    "id": "2c55d121-2841-427a-9001-98f97c3005fe",
+                    "imBack": "2c55d121-2841-427a-9001-98f97c3005fe",
+                    "weight": "Bolder"
+                }
+            ]
+        },
+        {
+            "type": "Container",
+            "items": [
+                {
+                    "type": "Image",
+                    "url": "https://710e4910b9ff.ngrok.io/services/static/horizontal.png"
+                },
+                {
+                    "type": "ColumnSet",
+                    "columns": [
+                        {
+                            "type": "Column",
+                            "items": [
+                                {
+                                    "type": "ImageSet",
+                                    "images": [
+                                        {
+                                            "type": "Image",
+                                            "size": "Small",
+                                            "url": "https://710e4910b9ff.ngrok.io/services/static/device.png",
+                                            "horizontalAlignment": "Right",
+                                            "spacing": "Medium"
+                                        }
+                                    ],
+                                    "spacing": "Small",
+                                    "imageSize": "Small"
+                                }
+                            ],
+                            "width": 3
+                        },
+                        {
+                            "type": "Column",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "waage",
+                                    "spacing": "Small"
+                                }
+                            ],
+                            "width": 15,
+                            "horizontalAlignment": "Center",
+                            "height": "stretch",
+                            "verticalContentAlignment": "Center"
+                        }
+                    ]
+                },
+                {
+                    "type": "ColumnSet",
+                    "columns": [
+                        {
+                            "type": "Column",
+                            "items": [
+                                {
+                                    "type": "ImageSet",
+                                    "images": [
+                                        {
+                                            "type": "Image",
+                                            "size": "Small",
+                                            "url": "https://710e4910b9ff.ngrok.io/services/static/location.png",
+                                            "horizontalAlignment": "Right",
+                                            "spacing": "Medium"
+                                        }
+                                    ],
+                                    "spacing": "Small",
+                                    "imageSize": "Small"
+                                }
+                            ],
+                            "width": 3
+                        },
+                        {
+                            "type": "Column",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "Obstabteilung",
+                                    "spacing": "Small"
+                                }
+                            ],
+                            "width": 15,
+                            "horizontalAlignment": "Center",
+                            "height": "stretch",
+                            "verticalContentAlignment": "Center"
+                        }
+                    ]
+                },
+                {
+                    "type": "ColumnSet",
+                    "columns": [
+                        {
+                            "type": "Column",
+                            "items": [
+                                {
+                                    "type": "ImageSet",
+                                    "images": [
+                                        {
+                                            "type": "Image",
+                                            "size": "Small",
+                                            "url": "https://710e4910b9ff.ngrok.io/services/static/timestamp.png",
+                                            "horizontalAlignment": "Right",
+                                            "spacing": "Medium"
+                                        }
+                                    ],
+                                    "spacing": "Small",
+                                    "imageSize": "Small"
+                                }
+                            ],
+                            "width": 3
+                        },
+                        {
+                            "type": "Column",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "Aug. 3, 2020, 9:06 p.m.",
+                                    "spacing": "Small"
+                                }
+                            ],
+                            "width": 15,
+                            "horizontalAlignment": "Center",
+                            "height": "stretch",
+                            "verticalContentAlignment": "Center"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "Image",
+            "url": "https://710e4910b9ff.ngrok.io/services/static/horizontal.png"
+        },
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "ActionSet",
+                            "actions": [
+                                {
+                                    "type": "Action.Submit",
+                                    "title": "Annehmen",
+                                    "data": {
+                                        "type": "assign_task",
+                                        "ticketId": "2c55d121-2841-427a-9001-98f97c3005fe",
+                                        "deviceId": "4c7cdba4-33d6-4d86-a802-1fe5c5d0319a"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "height": "stretch",
+            "horizontalAlignment": "Center"
+        }
+    ],
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json"
+}

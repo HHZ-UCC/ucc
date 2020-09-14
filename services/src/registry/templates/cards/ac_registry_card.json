@@ -1,0 +1,73 @@
+{
+    "type": "AdaptiveCard",
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.3",
+    "body": [
+        {
+            "type": "Container",
+            "items": [
+                {
+                    "type": "Image",
+                    "url": "https://gitlab.com/Hasanakhuy/public/-/raw/master/bilder_ac/schwarzIT.png",
+                    "horizontalAlignment": "Center",
+                    "separator": true
+                },
+                {
+                    "type": "Image",
+                    "url": "https://gitlab.com/Hasanakhuy/public/-/raw/master/bilder_ac/retailp.png",
+                    "spacing": "Medium",
+                    "horizontalAlignment": "Center",
+                    "separator": true
+                }
+            ],
+            "separator": true
+        },
+        {
+            "type": "Container",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "Hallo, mein Name Retailo. \n\nWie kann ich dir helfen ?\n",
+                    "separator": true,
+                    "horizontalAlignment": "Center",
+                    "wrap": true,
+                    "fontType": "Default",
+                    "isSubtle": true,
+                    "size": "Medium",
+                    "maxLines": 3,
+                    "weight": "Bolder"
+                }
+            ]
+        },
+    {% for entry in registered_apps %}
+        {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "ActionSet",
+                            "horizontalAlignment": "Right",
+                            "actions": [
+                                {
+                                    "type": "Action.Submit",
+                                    "title": "{{ entry.displayText }}",
+                                    "data": {
+                                        "payload" : {
+                                            "type": "list_alerts"
+                                        },
+                                        "target" : "{{ entry.targetUrl }}"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }                
+        {% if not forloop.last %},{% endif %}
+    {% endfor %}     
+    ]
+}
