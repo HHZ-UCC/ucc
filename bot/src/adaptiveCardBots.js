@@ -78,7 +78,9 @@ class AdaptiveCardsBot extends ActivityHandler {
                 payload: payload,
                 user: user
             };
+            console.log(`Going to call target endpoint ${ target } with body ${ JSON.stringify(requestBody) }`);
             const cardResponse = await callBotAction(target, requestBody);
+
             if (cardResponse) {
                 return {
                     data: {},
@@ -86,7 +88,7 @@ class AdaptiveCardsBot extends ActivityHandler {
                 };
             }
         } else {
-            const cardResponse = await callBotAction('https://3993245988df.ngrok.io/services/registry/bot/action', {});
+            const cardResponse = await callBotAction('https://c6b1d80d6800.ngrok.io/services/registry/bot/action', {});
             return {
                 data: {},
                 card: cardResponse

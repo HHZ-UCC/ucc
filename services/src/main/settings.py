@@ -25,7 +25,7 @@ SECRET_KEY = 'iijbr5)1#%^8x+4=z_k^669w&h_+a@&a5=hh&c+#=jbzl8%gp='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ChanHOST = "https://c6b1d80d6800.ngrok.io"
+HOST = "https://c6b1d80d6800.ngrok.io"
 BOT_SERVICE_URL = "http://ucc-bot:8080/api/notify"
 ENABLE_KAFKA_CONSUMER = os.getenv('ENABLE_KAFKA_CONSUMER', False)
 
@@ -43,9 +43,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'base.apps.BaseConfig',
     'checkstandalert.apps.CheckstandalertConfig',
     'maintenance.apps.MaintenanceConfig',
-    'base.apps.BaseConfig',
     'registry.apps.RegistryConfig'
 ]
 

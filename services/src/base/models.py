@@ -14,6 +14,3 @@ class Device(models.Model):
     type = models.CharField(max_length=30)
     location = models.CharField(max_length=30)
     created_at = models.DateTimeField('date published')
-
-#   author = models.ForeignKey(Author, on_delete=models.CASCADE)
-#   categories = models.ManyToManyField(Category)

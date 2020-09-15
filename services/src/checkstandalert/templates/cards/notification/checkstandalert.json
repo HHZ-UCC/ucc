@@ -9,20 +9,20 @@
             "items": [
                 {
                     "type": "Image",
-                    "url": "{{ host }}/static//schwarzIT.png",
+                    "url": "https://gitlab.com/Hasanakhuy/public/-/raw/master/bilder_ac/schwarzIT.png",
                     "horizontalAlignment": "Center",
                     "separator": true
                 },
                 {
                     "type": "Image",
-                    "url": "{{ host }}/static/checkstand.png",
+                    "url": "https://gitlab.com/Hasanakhuy/public/-/raw/master/bilder_ac/kasse.png",
                     "spacing": "Medium",
                     "horizontalAlignment": "Center",
                     "separator": true
                 },
                 {
                     "type": "Image",
-                    "url": "{{ host }}/static/anstehend.png",
+                    "url": "https://gitlab.com/Hasanakhuy/public/-/raw/master/bilder_ac/anstehend.png",
                     "horizontalAlignment": "Center"
                 }
             ],
@@ -33,7 +33,7 @@
             "items": [
                 {
                     "type": "TextBlock",
-                    "text": "Neue Kassenanfrage wurde um {{07.04.2020 15:19}} angefragt.\n",
+                    "text": "Neue Kassenanfrage wurde um {{ alert.created_at }} angefragt.\n",
                     "separator": true,
                     "horizontalAlignment": "Center",
                     "wrap": true,
@@ -63,7 +63,7 @@
                                             "type": "assign_checkstand",
                                             "alertId" : "{{ alert.id }}"
                                         },
-                                        "target" : "{{ host }}/maintenance/bot/action"
+                                        "target" : "{{ host }}/services/checkstandalert/bot/assign_alert"
                                     }
                                 }
                             ]

@@ -39,5 +39,5 @@ class CheckstandalertConfig(AppConfig):
             "app"         : self.verbose_name,
             "type"        : "list_alerts",
             "displayText" : "Zeige alle Alerts",
-            "targetUrl"  : '{host}/services/{name}/bot/action'.format(host=host, name=self.name)
+            "targetUrl"  : '{host}/services/{name}/bot/list_alerts'.format(host=host, name=self.name)
         }
