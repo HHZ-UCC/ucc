@@ -5,7 +5,8 @@
     - vars/default.yml
 
   tasks:
-    - include_role:
+    - import_role:
         name: geerlingguy.docker
-      docker_users:
-        - ubuntu
+      vars:
+        docker_users:
+          - ubuntu
