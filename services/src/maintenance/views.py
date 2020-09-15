@@ -17,13 +17,15 @@ from rest_framework.response import Response
 
 
 from .models import Ticket
+from .services import TicketsService
 from base.models import Device, Employee
 
 # Create your views here.
 logger = logging.getLogger(__name__)
-
+host = settings.HOST
+   
 @api_view(['POST'])
-def bot_action(request):
+def assign_ticket(request):
     valid_ser = BotActionValidator(data=request.data)
     if valid_ser.is_valid():
         request_body = valid_ser.validated_data
@@ -39,12 +41,17 @@ def bot_action(request):
         )
         
         Ticket.objects.filter(pk=payload["ticketId"]).update(fk_employee=employee)
-        host = settings.HOST
-        response = render_to_string('cards/ac_ticket_assigned.json', {'host': host})
+        response = render_to_string('cards/ticket_assigned.json', {'host': host, 'employee': employee})
         return HttpResponse(response, content_type='application/json')
     else:
        return Response(valid_ser.errors)
 
+
+@api_view(['POST'])
+def list_tickets(request): 
+    tickets = Ticket.objects.all()
+    response = render_to_string('cards/list_tickets.json', {'host': host, 'tickets' : tickets})
+    return HttpResponse(response, content_type='application/json')
 
 
 class PayloadValidator(serializers.Serializer):
@@ -63,7 +70,7 @@ class BotActionValidator(serializers.Serializer):
 
 
 @api_view(['GET'])
-def test(request):
+def notification(request):
     data = """{
         "device": {
             "deviceType": "waage",
@@ -78,18 +85,7 @@ def test(request):
         }
     }"""
     
-    messagePayload = json.loads(data)
-    devicePayload = messagePayload["device"]
-    device, created = Device.objects.update_or_create(
-        defaults={
-            'external_id': devicePayload["id"],
-            'type': devicePayload["deviceType"],
-            'location': devicePayload["shared_location"],
-            'created_at': timezone.now()
-        }
-    )
-    
-    ticket = Ticket(description="Drucker patrone ausgegangen", status="offen", fk_device=device, created_at=timezone.now() )
-    ticket.save()
+    ticketService = TicketsService()
+    ticketService.on_message(data)
     return Response(status=status.HTTP_200_OK)
 

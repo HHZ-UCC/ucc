@@ -39,7 +39,7 @@ class MaintenanceConfig(AppConfig):
             "app"         : self.verbose_name,
             "type"        : "list_tickets",
             "displayText" : "Zeige alle Tickets",
-            "targetUrl"  : '{host}/services/{name}/bot/action'.format(host=host, name=self.name)
+            "targetUrl"  : '{host}/services/{name}/bot/list_tickets'.format(host=host, name=self.name)
         }
 
  

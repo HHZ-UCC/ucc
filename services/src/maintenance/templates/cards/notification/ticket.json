@@ -1,0 +1,113 @@
+{
+    "type": "AdaptiveCard",
+    "actions": [
+        {
+            "type": "Action.Submit",
+            "title": "Annehmen",
+            "data": {
+                "payload" : {
+                    "type": "assign_task",
+                    "ticketId" : "{{ ticket.id }}",
+                    "deviceId" : "{{ ticket.fk_device.id }}"
+                },
+                "target" : "{{ host }}/services/maintenance/bot/assign_ticket"
+            }
+        }
+    ],
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.3",
+    "body": [
+        {
+            "type": "Container",
+            "items": [
+                {
+                    "type": "Image",
+                    "url": "https://gitlab.com/Hasanakhuy/public/-/raw/master/bilder_ac/schwarzIT.png",
+                    "horizontalAlignment": "Center",
+                    "separator": true
+                },
+                {
+                    "type": "Image",
+                    "url": "https://gitlab.com/Hasanakhuy/public/-/raw/master/bilder_ac/Waage.png",
+                    "spacing": "Medium",
+                    "horizontalAlignment": "Center",
+                    "separator": true
+                },
+                {
+                    "type": "Image",
+                    "url": "https://gitlab.com/Hasanakhuy/public/-/raw/master/bilder_ac/anstehend.png",
+                    "horizontalAlignment": "Center"
+                }
+            ]
+        },
+        {
+            "type": "Container",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "{{ ticket.description }}",
+                    "separator": true,
+                    "horizontalAlignment": "Center",
+                    "wrap": true,
+                    "fontType": "Default",
+                    "isSubtle": true,
+                    "size": "Large",
+                    "maxLines": 2,
+                    "weight": "Bolder"
+                }
+            ]
+        },
+        {
+            "type": "Container",
+            "separator": true,
+            "items": [
+                {
+                    "type": "ColumnSet",
+                    "separator": true,
+                    "style": "default",
+                    "bleed": true,
+                    "columns": [
+                        {
+                            "type": "Column",
+                            "width": "stretch",
+                            "items": [
+                                {
+                                    "type": "Image",
+                                    "url": "https://gitlab.com/Hasanakhuy/public/-/raw/master/bilder_ac/location.png",
+                                    "horizontalAlignment": "Center",
+                                    "spacing": "Medium"
+                                },
+                                {
+                                    "type": "TextBlock",
+                                    "text": "{{ ticket.fk_device.location }}",
+                                    "horizontalAlignment": "Center",
+                                    "wrap": true,
+                                    "isSubtle": true
+                                }
+                            ],
+                            "separator": true,
+                            "verticalContentAlignment": "Center"
+                        },
+                        {
+                            "type": "Column",
+                            "width": "stretch",
+                            "items": [
+                                {
+                                    "type": "Image",
+                                    "url": "https://gitlab.com/Hasanakhuy/public/-/raw/master/bilder_ac/datum.png",
+                                    "horizontalAlignment": "Center"
+                                },
+                                {
+                                    "type": "TextBlock",
+                                    "text": "{{ ticket.created_at }}",
+                                    "horizontalAlignment": "Center",
+                                    "isSubtle": true
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -21,7 +21,7 @@ class TicketsService:
                 defaults={
                     'external_id': devicePayload["id"],
                     'type': devicePayload["deviceType"],
-                    'location': devicePayload["ss_location"],
+                    'location': devicePayload["shared_location"],
                     'created_at': timezone.now()
                 }
             )
@@ -30,7 +30,7 @@ class TicketsService:
             ticket.save()
             
             host = settings.HOST
-            payload = render_to_string('../templates/cards/ac_single_ticket.json', {'ticket': ticket, 'host' : host}).replace("\n", "")
+            payload = render_to_string('../templates/cards/notification/ticket.json', {'ticket': ticket, 'host' : host}).replace("\n", "")
             payload = json.dumps(json.loads(payload))
             requests.post(settings.BOT_SERVICE_URL, data=payload, headers={'Content-Type':'application/json'})
         except Exception as e:
