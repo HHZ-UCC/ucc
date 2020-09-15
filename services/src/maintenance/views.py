@@ -7,13 +7,13 @@ from django.http import HttpResponse
 
 from django.template.loader import render_to_string
 from django.utils import timezone
+from django.conf import settings
 
 import json
 
 from rest_framework import status, serializers
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-
 
 
 from .models import Ticket
@@ -39,7 +39,7 @@ def bot_action(request):
         )
         
         Ticket.objects.filter(pk=payload["ticketId"]).update(fk_employee=employee)
-        host = "https://c0f44ffffe5a.ngrok.io/services"        
+        host = settings.HOST
         response = render_to_string('cards/ac_ticket_assigned.json', {'host': host})
         return HttpResponse(response, content_type='application/json')
     else:
