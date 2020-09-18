@@ -15,4 +15,4 @@ RUN pip install --upgrade pip \
 WORKDIR /usr/src/app/src/
 EXPOSE 8000
 
-CMD [ "gunicorn", "main.wsgi" ]
+CMD [ "gunicorn", "main.wsgi", "--bind 0.0.0.0:8000" ]
