@@ -158,3 +158,4 @@ USE_TZ = True
 
 #USE_X_FORWARDED_HOST = True
 STATIC_URL = '/static/'
+STATIC_ROOT= os.path.join(BASE_DIR, "static")
