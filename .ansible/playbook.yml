@@ -5,8 +5,23 @@
     - vars/default.yml
 
   tasks:
-    - import_role:
-        name: geerlingguy.docker
-      vars:
-        docker_users:
-          - ubuntu
+  - name: "Install pip"
+    include_role:
+      name: geerlingguy.pip
+    vars:
+      docker_users:
+        - ubuntu
+      pip_install_packages:
+        - name: docker
+        - name: docker-compose==1.26.0
+
+  - name: "Install docker"
+    include_role:
+      name: geerlingguy.docker
+    vars:
+      docker_users:
+        - ubuntu
+
+  - name: "Deploy"
+    include_role:
+      name: deploy

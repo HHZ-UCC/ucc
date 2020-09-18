@@ -56,7 +56,7 @@ services:
     environment:
       MicrosoftAppId: ${MICROSOFT_APP_ID}
       MicrosoftAppPassword: ${MICROSOFT_APP_PASSWORD}
-    command: /bin/sh -c "while sleep 1000; do :; done"
+    #command: /bin/sh -c "while sleep 1000; do :; done"
     volumes:
       - .:/workspace:cached
     expose:
@@ -67,7 +67,7 @@ services:
     container_name: application
     networks: 
     - local
-    command: /bin/sh -c "while sleep 1000; do :; done"
+    # command: /bin/sh -c "while sleep 1000; do :; done"
     volumes:
       - .:/workspace:cached
     expose:

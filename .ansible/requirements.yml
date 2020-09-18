@@ -1,2 +1,4 @@
 - name: geerlingguy.docker
   version: '2.8.2'
+- name: geerlingguy.pip
+  version: '2.0.0'

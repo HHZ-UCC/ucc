@@ -16,12 +16,9 @@
         "url": "https://github.com"
     },
     "dependencies": {
-        "adaptivecards-templating": "^0.1.1-alpha.0",
-        "apollo-boost": "^0.4.7",
         "axios": "^0.19.2",
         "botbuilder": "~4.6.1",
         "dotenv": "^8.2.0",
-        "graphql": "^14.6.0",
         "restify": "~8.4.0",
         "spdy-transport": "^3.0.0"
     },

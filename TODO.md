@@ -13,7 +13,7 @@
 - Skeleton für maintenance service               - Erledigt
 - Integration mit Datenbank                      - Erledigt
 - Integarton der Mainteannce Service Cards       - Erledigt
-    1. Zeigen aller offenen Tickets Card         - Offen
+    1. Zeigen aller offenen Tickets Card         - Erledigt
     2. Ticket Assignment Card                    - Erledigt
     3. Bestätigungs Card                         - Erledigt
 - Integration an Kafka als Consumer              - Erledigt
@@ -24,10 +24,10 @@
 ## Kassenalert Service:
 - Skeleton für kassenalert service                    - Erledigt
 - Integration mit Datenbank                           - Erledigt
-- Integarton der Service Cards                        - Offen
-    1. Zeigen aller Kassen Alerts                     - Offen
-    1. Assignment Card                                - Offen
-    2. Bestätigungs Card                              - Offen
+- Integarton der Service Cards                        - Erledigt
+    1. Zeigen aller Kassen Alerts                     - Erledigt
+    1. Assignment Card                                - Erledigt
+    2. Bestätigungs Card                              - Erledigt
 - Regelwerk für Thingsboard erstellen                 - Erledigt
 - Regelwerk von Thingsboard an Kafka anbinden         - Erledigt
 - Anbinden Dasbutton (Postman oder physikalisch       - Erledigt 

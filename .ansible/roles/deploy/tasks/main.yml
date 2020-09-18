@@ -1,0 +1,10 @@
+- name: Copy source files to remote host
+  synchronize:
+    src: "{{ playbook_dir }}/../"
+    dest: /deploy
+
+- name: Create and start services
+  docker_compose:
+    project_src: "/deploy"
+    build: yes
+  register: output
