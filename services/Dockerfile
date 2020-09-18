@@ -14,7 +14,7 @@ RUN pip install --upgrade pip \
 
 WORKDIR /usr/src/app/src/
 
-RUN python manage.py collectstatic \
+RUN python manage.py collectstatic --noinput \
     && python manage.py migrate
 
 EXPOSE 8000
