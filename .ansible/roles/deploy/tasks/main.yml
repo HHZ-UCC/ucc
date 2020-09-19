@@ -7,6 +7,14 @@
   synchronize:
     src: "{{ deployment_directory_source }}"
     dest: "{{ deployment_directory_path }}"
+    rsync_opts:
+    - "--exclude=.ansible"
+    - "--exclude=.github"
+
+- name: Replace variables in env file
+  template:
+    src: "{{ deployment_directory_source }}/.env.j2"
+    dest: "{{ deployment_directory_path }}/.env"
 
 - name: Create and start services
   docker_compose:

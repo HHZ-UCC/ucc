@@ -14,7 +14,7 @@ jobs:
           ANSIBLE_STDOUT_CALLBACK: debug
           ANSIBLE_FORCE_COLOR: true
         with:
-          playbookName: ".ansible/playbook.yml"
+          playbookName: ".ansible/site.yml"
           inventoryFile: ".ansible/inventory/hosts"
           requirementsFile: ".ansible/requirements.yml"
           rolesPath: ".ansible/roles"
