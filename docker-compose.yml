@@ -68,6 +68,8 @@ services:
     networks: 
     - local
     # command: /bin/sh -c "while sleep 1000; do :; done"
+    environment:
+      DEBUG: "False"
     volumes:
       - .:/workspace:cached
     expose:
