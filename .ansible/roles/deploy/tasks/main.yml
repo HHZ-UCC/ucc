@@ -1,10 +1,15 @@
+- name: Delete existing dist folder
+  file:
+    path: "{{ deployment_directory_path }}"
+    state: absent
+
 - name: Copy source files to remote host
   synchronize:
-    src: "{{ playbook_dir }}/../"
-    dest: /deploy
+    src: "{{ deployment_directory_source }}"
+    dest: "{{ deployment_directory_path }}"
 
 - name: Create and start services
   docker_compose:
-    project_src: "/deploy"
+    project_src: "{{ deployment_directory_path }}"
     build: yes
   register: output
