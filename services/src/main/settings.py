@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'iijbr5)1#%^8x+4=z_k^669w&h_+a@&a5=hh&c+#=jbzl8%gp='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', True)
+DEBUG = os.getenv('DEBUG', True) == 'True'
 
 HOST = "https://c6b1d80d6800.ngrok.io"
 BOT_SERVICE_URL = "http://ucc-bot:8080/api/notify"
