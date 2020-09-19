@@ -25,7 +25,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'iijbr5)1#%^8x+4=z_k^669w&h_+a@&a5=hh&c+#=j
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', True) == 'True'
 
-HOST = "https://c6b1d80d6800.ngrok.io"
+HOST = os.getenv('HOST', 'localhost')
 BOT_SERVICE_URL = "http://ucc-bot:8080/api/notify"
 ENABLE_KAFKA_CONSUMER = os.getenv('ENABLE_KAFKA_CONSUMER', False)
 

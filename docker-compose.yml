@@ -11,6 +11,8 @@ services:
     - "80:80"
     - "443:443"
     restart: always
+    environment:
+      HOST: ${HOST}
     volumes:
       - ./nginx/reload.sh:/reload.sh
       - ./nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
@@ -22,9 +24,9 @@ services:
     networks: 
     - local
     environment:
-      - POSTGRES_USER=${DATABASE_USER}
-      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
-      - POSTGRES_DB=${DATABASE_SCHEMA}
+        POSTGRES_USER: ${DATABASE_USER}
+        POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+        POSTGRES_DB: ${DATABASE_SCHEMA}
     expose:
       - "5432"
     volumes:
@@ -70,6 +72,8 @@ services:
     # command: /bin/sh -c "while sleep 1000; do :; done"
     environment:
       DEBUG: "False"
+      HOST: ${HOST}
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
     volumes:
       - .:/workspace:cached
     expose:
