@@ -158,5 +158,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 USE_X_FORWARDED_HOST = True
-STATIC_URL = '/services/static/'
+FORCE_SCRIPT_NAME = '/services'
+STATIC_URL = FORCE_SCRIPT_NAME + '/static/'
 STATIC_ROOT= os.path.join(BASE_DIR, "static")
