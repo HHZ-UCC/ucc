@@ -12,7 +12,7 @@ services:
     - "443:443"
     restart: always
     environment:
-      HOST: ${HOST}
+      HOSTNAME: ${HOSTNAME}
     volumes:
       - /etc/letsencrypt/:/etc/letsencrypt/
     depends_on:

@@ -1,2 +1,3 @@
-HOST: hhz-ucc.de
+HOSTNAME: hhz-ucc.de
+HOST: https://hhz-ucc.de
 THINGSBOARD_DATABASE_USER: hello

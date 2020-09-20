@@ -1,12 +1,11 @@
 ---
-
 - include_vars:
     file: templates/things-board-rule-chain.json
     name: rule_chain_body
 
 - name: Get thingsboard authentication token
   uri:
-    url: "https://{{ HOST }}/api/auth/login"
+    url: "{{ HOST }}/api/auth/login"
     body:
       username: "{{ THINGSBOARD_USER }}"
       password: "{{ THINGSBOARD_PASSWORD }}"
@@ -23,7 +22,7 @@
 
 - name: Get root rule chain
   uri:
-    url: "https://{{ HOST }}/api/ruleChains?limit=10"
+    url: "{{ HOST }}/api/ruleChains?limit=10"
     body_format: json
     return_content: yes
     status_code: [200]
@@ -47,7 +46,7 @@
 
 - name: Update root rule chain metadata
   uri:
-    url: "https://{{HOST}}/api/ruleChain/metadata"
+    url: "{{HOST}}/api/ruleChain/metadata"
     body: "{{ root_rule_chain_metadata }}"
     body_format: json
     method: POST

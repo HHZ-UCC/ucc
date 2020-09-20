@@ -13,7 +13,7 @@ upstream ucc-bot {
 server {
         
         listen       80;
-        server_name  ${HOST}; 
+        server_name  ${HOSTNAME}; 
 
         
         location / {
@@ -56,12 +56,12 @@ server {
 }
 
 server {
-    if ($host = ${HOST}) {
+    if ($host = ${HOSTNAME}) {
         return 301 https://$host$request_uri;
     } # managed by Certbot
 
 
-    server_name ${HOST};
+    server_name ${HOSTNAME};
     listen 80;
    
     return 404; # managed by Certbot
