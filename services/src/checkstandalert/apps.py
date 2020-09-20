@@ -23,7 +23,7 @@ class CheckstandalertConfig(AppConfig):
         from checkstandalert.services import AlertService
         alertService = AlertService()
         kafkaConsumer = KafkaConsumer(
-            'kassenalert',
+            alertService.topic_name,
             # bootstrap_servers=settings.KAFKA_SERVERS,
             bootstrap_servers='kafka:9093',
             auto_offset_reset='latest',

@@ -14,7 +14,6 @@ class TicketsService:
     def on_message(self, message):
         try:
             print("value=%s" % ( message) )
-            # TODO validate payload
             messagePayload = json.loads(message)
             devicePayload = messagePayload["device"]
             device, created = Device.objects.update_or_create(

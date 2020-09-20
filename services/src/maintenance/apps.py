@@ -23,7 +23,7 @@ class MaintenanceConfig(AppConfig):
         from maintenance.services import TicketsService
         ticketService = TicketsService()
         kafkaConsumer = KafkaConsumer(
-            'tickets',
+            ticketService.topic_name,
             # bootstrap_servers=settings.KAFKA_SERVERS,
             bootstrap_servers='kafka:9093',
             auto_offset_reset='latest',
