@@ -15,15 +15,21 @@
   include_role:
     name: geerlingguy.certbot
   vars:
-    certbot_admin_email: {{ certbot_admin_mail }}
+    certbot_admin_email: "{{ certbot_admin_mail }}"
     certbot_create_method : "standalone"
     certbot_create_if_missing: true
     certbot_auto_renew_user: ubuntu
     certbot_auto_renew_minute: "30"
     certbot_auto_renew_hour: "9"
+    certbot_create_standalone_stop_services:
+      - docker
     certbot_certs:
       - domains:
-          - {{ HOST }}
+          - "{{ HOST }}"
+    certbot_create_command: >-
+      {{ certbot_script }} certonly --nginx --noninteractive --agree-tos
+      --email {{ cert_item.email | default(certbot_admin_email) }}
+      -d {{ cert_item.domains | join(',') }}
 
 - name: Replace variables in env file
   template:
