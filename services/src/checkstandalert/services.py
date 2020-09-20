@@ -17,6 +17,7 @@ class AlertService:
             print("value=%s" % ( message) )
 
             alert = Alert(description="Bitte Kassenfrage akzeptieren.", status="offen", created_at=timezone.now() )
+            alert.save()
             payload = render_to_string('../templates/cards/notification/checkstandalert.json', {'alert': alert, 'host' : host}).replace("\n", "")
             payload = json.dumps(json.loads(payload))
             requests.post(settings.BOT_SERVICE_URL, data=payload, headers={'Content-Type':'application/json'})
