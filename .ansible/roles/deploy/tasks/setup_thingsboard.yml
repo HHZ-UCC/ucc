@@ -23,6 +23,7 @@
   set_fact:
     auth_token: "Bearer {{ access_token.json.token }}"
 
+# Creat the rule chain
 - name: Get root rule chain
   uri:
     url: "{{ HOST }}/api/ruleChains?limit=10"
@@ -57,3 +58,49 @@
     status_code: [200]
     headers:
       X-Authorization: "{{ auth_token }}"
+
+## Create the device
+- include_vars:
+    file: templates/device.json
+    name: device_body
+
+- name: Check if device exists
+  uri:
+    url: "{{ HOST }}/api/tenant/devices?deviceName={{ device_name }}"
+    method: GET
+    return_content: yes
+    status_code: [200, 404]
+    headers:
+      X-Authorization: "{{ auth_token }}"
+  register: get_device_response
+  vars:
+    device_name: Obstwaage
+
+- name: Setup device
+  block: 
+    - name: Create device
+      uri:
+        url: "{{ HOST }}/api/device?accessToken={{ device_access_token }}"
+        body: "{{ device_body }}"
+        body_format: json
+        method: POST
+        return_content: yes
+        status_code: [200]
+        headers:
+          X-Authorization: "{{ auth_token }}"
+      register: device_response
+      vars:
+        device_access_token: obstwaage
+
+    - name: Create device attributes
+      uri: 
+        url: "{{ HOST }}/api/plugins/telemetry/DEVICE/{{ device_id }}/SHARED_SCOPE"
+        body_format: json
+        body: "{{ device_attributes_payload }}"
+        method: POST
+        headers:
+          X-Authorization: "{{ auth_token }}"
+      vars:
+        device_id: "{{ device_response.json.id.id }}"
+        device_attributes_payload: "{ 'location': 'Obstabteilung'}"
+  when: get_device_response.status == 404
