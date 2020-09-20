@@ -1,3 +1,4 @@
 geerlingguy.*
 .ansible/entrypoint.sh
 .devcontainer
+.ansible/key/id_rsa
