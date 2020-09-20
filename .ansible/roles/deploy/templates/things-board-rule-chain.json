@@ -1,7 +1,7 @@
 {
   "ruleChain": {
     "additionalInfo": null,
-    "name": "OLD Root Rule Chain",
+    "name": "Root Rule Chain",
     "firstRuleNodeId": null,
     "root": false,
     "debugMode": false,
@@ -12,8 +12,8 @@
     "nodes": [
       {
         "additionalInfo": {
-          "layoutX": 57,
-          "layoutY": 543
+          "layoutY": 543,
+          "layoutX": 57
         },
         "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
         "name": "check checkstandalert",
@@ -24,8 +24,8 @@
       },
       {
         "additionalInfo": {
-          "layoutX": 330,
-          "layoutY": 538
+          "layoutY": 538,
+          "layoutX": 330
         },
         "type": "org.thingsboard.rule.engine.metadata.TbGetOriginatorFieldsNode",
         "name": "add fields",
@@ -38,8 +38,8 @@
       },
       {
         "additionalInfo": {
-          "layoutX": 832,
-          "layoutY": 531
+          "layoutY": 531,
+          "layoutX": 832
         },
         "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
         "name": "Map Device Data",
@@ -50,31 +50,31 @@
       },
       {
         "additionalInfo": {
-          "layoutX": 1097,
-          "layoutY": 521
+          "layoutY": 521,
+          "layoutX": 1097
         },
         "type": "org.thingsboard.rule.engine.kafka.TbKafkaNode",
         "name": "Send checkstandalert to kafka",
         "debugMode": true,
         "configuration": {
-          "topicPattern": "kassen_alert",
-          "bootstrapServers": "kafka:9093",
           "retries": 0,
-          "batchSize": 16384,
-          "linger": 0,
-          "bufferMemory": 33554432,
-          "acks": "-1",
+          "kafkaHeadersCharset": "UTF-8",
           "keySerializer": "org.apache.kafka.common.serialization.StringSerializer",
+          "linger": 0,
+          "batchSize": 16384,
           "valueSerializer": "org.apache.kafka.common.serialization.StringSerializer",
-          "otherProperties": {},
+          "bootstrapServers": "kafka:9093",
           "addMetadataKeyValuesAsKafkaHeaders": true,
-          "kafkaHeadersCharset": "UTF-8"
+          "acks": "-1",
+          "topicPattern": "kassen_alert",
+          "bufferMemory": 33554432,
+          "otherProperties": {}
         }
       },
       {
         "additionalInfo": {
-          "layoutX": 63,
-          "layoutY": 441
+          "layoutY": 441,
+          "layoutX": 63
         },
         "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
         "name": "check waage",
@@ -85,8 +85,8 @@
       },
       {
         "additionalInfo": {
-          "layoutX": 222,
-          "layoutY": 293
+          "layoutY": 293,
+          "layoutX": 222
         },
         "type": "org.thingsboard.rule.engine.filter.TbOriginatorTypeFilterNode",
         "name": "If device",
@@ -99,27 +99,27 @@
       },
       {
         "additionalInfo": {
-          "layoutX": 596,
-          "layoutY": 434
+          "layoutY": 434,
+          "layoutX": 596
         },
         "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
         "name": "Device Attributes",
         "debugMode": true,
         "configuration": {
           "clientAttributeNames": [],
-          "sharedAttributeNames": [],
-          "serverAttributeNames": [
+          "serverAttributeNames": [],
+          "sharedAttributeNames": [
             "location"
           ],
-          "latestTsKeyNames": [],
           "tellFailureIfAbsent": false,
-          "getLatestValueWithTs": false
+          "getLatestValueWithTs": false,
+          "latestTsKeyNames": []
         }
       },
       {
         "additionalInfo": {
-          "layoutX": 336,
-          "layoutY": 436
+          "layoutY": 436,
+          "layoutX": 336
         },
         "type": "org.thingsboard.rule.engine.metadata.TbGetOriginatorFieldsNode",
         "name": "add fields",
@@ -132,8 +132,8 @@
       },
       {
         "additionalInfo": {
-          "layoutX": 838,
-          "layoutY": 429
+          "layoutY": 429,
+          "layoutX": 838
         },
         "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
         "name": "Map Device Data",
@@ -144,31 +144,31 @@
       },
       {
         "additionalInfo": {
-          "layoutX": 1103,
-          "layoutY": 419
+          "layoutY": 419,
+          "layoutX": 1103
         },
         "type": "org.thingsboard.rule.engine.kafka.TbKafkaNode",
         "name": "Send ticket to kafka",
         "debugMode": true,
         "configuration": {
-          "topicPattern": "tickets",
-          "bootstrapServers": "kafka:9093",
           "retries": 0,
-          "batchSize": 16384,
-          "linger": 0,
-          "bufferMemory": 33554432,
-          "acks": "-1",
+          "kafkaHeadersCharset": "UTF-8",
           "keySerializer": "org.apache.kafka.common.serialization.StringSerializer",
+          "linger": 0,
+          "batchSize": 16384,
           "valueSerializer": "org.apache.kafka.common.serialization.StringSerializer",
-          "otherProperties": {},
+          "bootstrapServers": "kafka:9093",
           "addMetadataKeyValuesAsKafkaHeaders": true,
-          "kafkaHeadersCharset": "UTF-8"
+          "acks": "-1",
+          "topicPattern": "tickets",
+          "bufferMemory": 33554432,
+          "otherProperties": {}
         }
       },
       {
         "additionalInfo": {
-          "layoutX": 347,
-          "layoutY": 149
+          "layoutY": 149,
+          "layoutX": 347
         },
         "type": "org.thingsboard.rule.engine.filter.TbMsgTypeSwitchNode",
         "name": "Message Type Switch",
