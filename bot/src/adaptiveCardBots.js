@@ -6,6 +6,8 @@ const axios = require('axios');
 
 // Import AdaptiveCard content.
 
+const host = process.env.HOST;
+const services_url = `https://${host}/services/registry/bot/action`
 const WELCOME_TEXT = 'This bot will introduce you to Adaptive Cards. Type anything to see an Adaptive Card.';
 
 const callBotAction = async (url, body) => {
@@ -40,18 +42,13 @@ class AdaptiveCardsBot extends ActivityHandler {
                     await context.sendActivity(`Welcome to Adaptive Cards Bot  ${ membersAdded[cnt].name }. ${ WELCOME_TEXT }`);
                 }
             }
-
-            // By calling next() you ensure that the next BotHandler is run.
             await next();
         });
         this.onMessage(async (context, next) => {
             this.addConversationReference(context.activity);
             const handleMessageResult = await this.handleMessage(context.activity);
-            // console.log(context.activity);
-            // const randomlySelectedCard = CARDS[Math.floor((Math.random() * CARDS.length - 1) + 1)];
             const { card } = handleMessageResult;
             await context.sendActivity(this.getCard(card));
-            // By calling next() you ensure that the next BotHandler is run.
             await next();
         });
     }
@@ -88,7 +85,7 @@ class AdaptiveCardsBot extends ActivityHandler {
                 };
             }
         } else {
-            const cardResponse = await callBotAction('https://c6b1d80d6800.ngrok.io/services/registry/bot/action', {});
+            const cardResponse = await callBotAction(services_url, {});
             return {
                 data: {},
                 card: cardResponse
@@ -99,28 +96,6 @@ class AdaptiveCardsBot extends ActivityHandler {
     isUndefined(prop) {
         return typeof prop === 'undefined';
     }
-
-    // renderCard() {
-    //     var dataContext = new EvaluationContext();
-    //     const data = {
-    //         ticket: {
-    //             id: 'cf01c6c7-c996-4270-bd19-39daf30c6f9f',
-    //             status: 'Open',
-    //             description: 'Drucker Patrone ist aus gegangen.'
-    //         },
-    //         device: {
-    //             id: 'cf01c6c7-c996-4270-bd19-asdf12311',
-    //             location: '1. Stock Gemüse Regal 2',
-    //             name: 'Waage XF800'
-    //         }
-    //     };
-    //     dataContext.$root = {
-    //         ...data
-    //     };
-    //     return {
-    //         attachments: [CardFactory.adaptiveCard(template.expand(dataContext))]
-    //     };
-    // }
 
     getCard(data) {
         return {
