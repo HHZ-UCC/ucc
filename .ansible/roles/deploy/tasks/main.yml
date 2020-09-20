@@ -25,7 +25,7 @@
       - docker
     certbot_certs:
       - domains:
-          - "{{ HOST }}"
+          - "{{ HOSTNAME }}"
 
 - name: Replace variables in env file
   template:
