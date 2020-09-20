@@ -14,9 +14,8 @@ services:
     environment:
       HOST: ${HOST}
     volumes:
-      - ./nginx/reload.sh:/reload.sh
-      - ./nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
-      - ./nginx/etc/letsencrypt/:/etc/letsencrypt/
+      - ./nginx/templates:/etc/nginx/templates
+      - /etc/letsencrypt/:/etc/letsencrypt/
 
   postgres-thingsboard:
     image: "postgres:${POSTGRES_VERSION}"

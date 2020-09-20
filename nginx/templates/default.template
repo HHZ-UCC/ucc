@@ -14,7 +14,7 @@ server {
         
         # TODO replace with domain name
         listen       80;
-        server_name  hhz-ucc.de; 
+        server_name  ${HOST}; 
 
         
         location / {
@@ -66,15 +66,16 @@ server {
     include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
 
-}server {
-    if ($host = hhz-ucc.de) {
+}
+
+server {
+    if ($host = ${HOST}) {
         return 301 https://$host$request_uri;
     } # managed by Certbot
 
 
-        server_name hhz-ucc.de;
-        listen 80;
+    server_name ${HOST};
+    listen 80;
+   
     return 404; # managed by Certbot
-
-
 }

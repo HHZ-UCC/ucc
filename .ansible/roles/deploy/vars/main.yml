@@ -1,3 +1,4 @@
 ---
 deployment_directory_source:     "{{ playbook_dir }}/../"
 deployment_directory_path:       "/deployment"
+certbot_admin_mail:              "fethullah.misir@hotmail.de"
