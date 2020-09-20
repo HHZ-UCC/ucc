@@ -10,7 +10,7 @@ from .models import Alert
 host = settings.HOST
 
 class AlertService:
-    topic_name = "kassenalert"
+    topic_name = "kassen_alert"
 
     def on_message(self, message):
         try:
