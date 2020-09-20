@@ -37,3 +37,5 @@
     project_src: "{{ deployment_directory_path }}"
     build: yes
   register: output
+
+- include_tasks: setup_thingsboard.yml
