@@ -77,6 +77,7 @@ services:
       DEBUG: "False"
       HOST: ${HOST}
       DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
+      ENABLE_KAFKA_CONSUMER: "True"
     volumes:
       - .:/workspace:cached
     expose:

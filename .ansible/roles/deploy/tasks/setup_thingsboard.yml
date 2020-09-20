@@ -10,11 +10,14 @@
       username: "{{ THINGSBOARD_USER }}"
       password: "{{ THINGSBOARD_PASSWORD }}"
     body_format: json
-    status_code: 200
+    status_code: [200]
     method: POST
     return_content: yes
   register: access_token
   failed_when: "'token' not in access_token.json"
+  until: access_token.status == 200
+  retries: 10
+  delay: 10
 
 - name: Set access token as variable
   set_fact:

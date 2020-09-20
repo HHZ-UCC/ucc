@@ -27,7 +27,7 @@ DEBUG = os.getenv('DEBUG', True) == 'True'
 
 HOST = os.getenv('HOST', 'localhost')
 BOT_SERVICE_URL = "http://ucc-bot:8080/api/notify"
-ENABLE_KAFKA_CONSUMER = os.getenv('ENABLE_KAFKA_CONSUMER', False)
+ENABLE_KAFKA_CONSUMER = os.getenv('ENABLE_KAFKA_CONSUMER', False) == 'True'
 
 
 ALLOWED_HOSTS = ['*']
