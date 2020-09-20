@@ -7,7 +7,7 @@ const axios = require('axios');
 // Import AdaptiveCard content.
 
 const host = process.env.HOST;
-const services_url = `https://${host}/services/registry/bot/action`
+const services_url = `${host}/services/registry/bot/action`
 const WELCOME_TEXT = 'This bot will introduce you to Adaptive Cards. Type anything to see an Adaptive Card.';
 
 const callBotAction = async (url, body) => {
