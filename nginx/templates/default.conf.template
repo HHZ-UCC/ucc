@@ -12,7 +12,6 @@ upstream ucc-bot {
 
 server {
         
-        # TODO replace with domain name
         listen       80;
         server_name  ${HOST}; 
 
@@ -49,7 +48,6 @@ server {
             # proxy_set_header X-Forwarded-Proto $scheme;
         }
 
-        ## TODO add bot service
         location /bot/ {
             # proxy_set_header X-Forwarded-Prefix "/";
             proxy_pass http://ucc-bot/;

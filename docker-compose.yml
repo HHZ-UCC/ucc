@@ -3,7 +3,7 @@ version: '3.8'
 services:
 
   nginx:
-    image: nginx:${NGINX_VERSION}
+    build: ./nginx
     container_name: nginx
     networks: 
     - local
@@ -14,8 +14,11 @@ services:
     environment:
       HOST: ${HOST}
     volumes:
-      - ./nginx/templates:/etc/nginx/templates
       - /etc/letsencrypt/:/etc/letsencrypt/
+    depends_on:
+      - thingsboard
+      - application
+      - ucc-bot
 
   postgres-thingsboard:
     image: "postgres:${POSTGRES_VERSION}"
