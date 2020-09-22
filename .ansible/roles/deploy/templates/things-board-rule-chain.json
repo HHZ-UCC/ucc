@@ -66,7 +66,7 @@
           "bootstrapServers": "kafka:9093",
           "addMetadataKeyValuesAsKafkaHeaders": true,
           "acks": "-1",
-          "topicPattern": "kassen_alert",
+          "topicPattern": "checkstandalert",
           "bufferMemory": 33554432,
           "otherProperties": {}
         }
