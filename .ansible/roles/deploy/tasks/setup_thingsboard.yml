@@ -15,7 +15,6 @@
     method: POST
     return_content: yes
   register: access_token
-  failed_when: "'token' not in access_token.json"
   until: access_token.status == 200
   retries: 10
   delay: 10
