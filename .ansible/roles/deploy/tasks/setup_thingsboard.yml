@@ -3,6 +3,7 @@
     file: templates/things-board-rule-chain.json
     name: rule_chain_body
 
+
 - name: Get thingsboard authentication token
   uri:
     url: "{{ HOST }}/api/auth/login"
