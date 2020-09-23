@@ -10,4 +10,4 @@ class Alert(models.Model):
     description = models.CharField(max_length=500)
     status = models.CharField(max_length=50)
     created_at = models.DateTimeField('date published')
-    fk_employee = models.ForeignKey(Employee, on_delete=models.CASCADE, null=True)
+    fk_employee = models.ForeignKey(Employee, on_delete=models.CASCADE, blank=True, null=True)

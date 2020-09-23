@@ -1,0 +1,78 @@
+{
+    "type": "AdaptiveCard",
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.3",
+    
+    "body": [
+        {
+            "type": "Container",
+            "items": [
+                {
+                    "type": "Image",
+                    "url": "https://gitlab.com/Hasanakhuy/public/-/raw/master/bilder_ac/schwarzIT.png",
+                    "horizontalAlignment": "Center",
+                    "separator": true
+                },
+                {
+                    "type": "Image",
+                    "url": "https://gitlab.com/Hasanakhuy/public/-/raw/master/bilder_ac/kasse.png",
+                    "spacing": "Medium",
+                    "horizontalAlignment": "Center",
+                    "separator": true
+                },
+                {
+                    "type": "Image",
+                    "url": "https://gitlab.com/Hasanakhuy/public/-/raw/master/bilder_ac/anstehend.png",
+                    "horizontalAlignment": "Center"
+                }
+            ],
+            "separator": true
+        },
+        {
+            "type": "Container",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "Neue Kassenanfrage wurde um {{ alert.created_at }} angefragt.\n",
+                    "separator": true,
+                    "horizontalAlignment": "Center",
+                    "wrap": true,
+                    "fontType": "Default",
+                    "isSubtle": true,
+                    "size": "Medium",
+                    "maxLines": 3,
+                    "weight": "Bolder"
+                }
+            ]
+        },
+         {
+            "type": "ColumnSet",
+            "columns": [
+                {
+                    "type": "Column",
+                    "width": "stretch",
+                    "items": [
+                        {
+                            "type": "ActionSet",
+                            "actions": [
+                                {
+                                    "type": "Action.Submit",
+                                    "title": "Annehmen",
+                                    "data": {
+                                        "payload" : {
+                                            "type": "assign_checkstand",
+                                            "alertId" : "{{ alert.id }}"
+                                        },
+                                        "target" : "{{ host }}/services/checkstandalert/bot/assign_alert"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "height": "stretch",
+            "horizontalAlignment": "Center"
+        }
+    ]
+}

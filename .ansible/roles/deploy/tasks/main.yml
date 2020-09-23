@@ -1,0 +1,41 @@
+- name: Delete existing dist folder
+  file:
+    path: "{{ deployment_directory_path }}"
+    state: absent
+
+- name: Copy source files to remote host
+  synchronize:
+    src: "{{ deployment_directory_source }}"
+    dest: "{{ deployment_directory_path }}"
+    rsync_opts:
+    - "--exclude=.ansible"
+    - "--exclude=.github"
+
+- name: "Install certbot"
+  include_role:
+    name: geerlingguy.certbot
+  vars:
+    certbot_admin_email: "{{ certbot_admin_mail }}"
+    certbot_create_method : "standalone"
+    certbot_create_if_missing: true
+    certbot_auto_renew_user: ubuntu
+    certbot_auto_renew_minute: "30"
+    certbot_auto_renew_hour: "9"
+    certbot_create_standalone_stop_services:
+      - docker
+    certbot_certs:
+      - domains:
+          - "{{ HOSTNAME }}"
+
+- name: Replace variables in env file
+  template:
+    src: "{{ deployment_directory_source }}/.env.j2"
+    dest: "{{ deployment_directory_path }}/.env"
+
+- name: Create and start services
+  docker_compose:
+    project_src: "{{ deployment_directory_path }}"
+    build: yes
+  register: output
+
+- include_tasks: setup_thingsboard.yml

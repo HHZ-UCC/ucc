@@ -13,6 +13,11 @@ RUN pip install --upgrade pip \
     && pip install -r requirements.txt
 
 WORKDIR /usr/src/app/src/
+
+RUN mkdir static \
+    && python manage.py collectstatic --noinput \
+    && python manage.py migrate
+
 EXPOSE 8000
 
-# CMD [ "gunicorn", "main.wsgi" ]
+CMD [ "gunicorn", "-b", "0.0.0.0:8000", "main.wsgi"]

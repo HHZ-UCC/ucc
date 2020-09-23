@@ -20,14 +20,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'iijbr5)1#%^8x+4=z_k^669w&h_+a@&a5=hh&c+#=jbzl8%gp='
+SECRET_KEY = os.getenv('SECRET_KEY', 'iijbr5)1#%^8x+4=z_k^669w&h_+a@&a5=hh&c+#=jbzl8%gp=')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', True) == 'True'
 
-HOST = "https://3993245988df.ngrok.io"
+HOST = os.getenv('HOST', 'localhost')
 BOT_SERVICE_URL = "http://ucc-bot:8080/api/notify"
-ENABLE_KAFKA_CONSUMER = os.getenv('ENABLE_KAFKA_CONSUMER', False)
+ENABLE_KAFKA_CONSUMER = os.getenv('ENABLE_KAFKA_CONSUMER', False) == 'True'
 
 
 ALLOWED_HOSTS = ['*']
@@ -43,14 +43,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'base.apps.BaseConfig',
     'checkstandalert.apps.CheckstandalertConfig',
     'maintenance.apps.MaintenanceConfig',
-    'base.apps.BaseConfig',
     'registry.apps.RegistryConfig'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'request_logging.middleware.LoggingMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -118,6 +120,11 @@ LOGGING = {
             'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
             'propagate': False,
         },
+        'django.request': {
+            'handlers': ['console'],
+            'level':  os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+            'propagate': False,
+        }
     },
 }
 # Password validation
@@ -156,4 +163,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/static/'
+USE_X_FORWARDED_HOST = True
+FORCE_SCRIPT_NAME = '/services'
+STATIC_URL = FORCE_SCRIPT_NAME + '/static/'
+STATIC_ROOT= os.path.join(BASE_DIR, "static")

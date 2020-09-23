@@ -1,0 +1,89 @@
+{
+	"type": "AdaptiveCard",
+	"$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+	"version": "1.3",
+	"body": [{
+			"type": "Container",
+			"items": [{
+					"type": "Image",
+					"url": "https://gitlab.com/Hasanakhuy/public/-/raw/master/bilder_ac/schwarzIT.png",
+					"horizontalAlignment": "Center",
+					"separator": true
+				},
+				{
+					"type": "Image",
+					"url": "https://gitlab.com/Hasanakhuy/public/-/raw/master/bilder_ac/ListeIconTicket.jpg",
+					"spacing": "Medium",
+					"horizontalAlignment": "Center",
+					"separator": true
+				}
+			]
+		},
+		{
+			"type": "Container",
+			"separator": true,
+			"items": [
+            {% if tickets %}
+                {% for ticket in tickets %}
+                {
+                    "type": "ColumnSet",
+                    "separator": true,
+                    "style": "default",
+                    "bleed": true,
+                    "columns": [{
+                        "type": "Column",
+                        "width": "stretch",
+                        "items": [{
+                                "type": "TextBlock",
+                                "text": "{{ ticket.description }}",
+                                "horizontalAlignment": "Center",
+                                "isSubtle": true,
+                                "wrap": true
+                            },
+                            {
+                                "type": "TextBlock",
+                                "text": "{{ ticket.fk_device.location }}",
+                                "horizontalAlignment": "Center",
+                                "wrap": true,
+                                "isSubtle": true
+                            },
+                            {
+                                "type": "TextBlock",
+                                "text": "{{ ticket.created_at }}",
+                                "horizontalAlignment": "Center",
+                                "wrap": true,
+                                "isSubtle": true
+                            }
+                        ],
+                        "separator": true,
+                        "verticalContentAlignment": "Center"
+                    }]
+                }            
+                {% if not forloop.last %},{% endif %}
+                {% endfor %}  
+            {% else %}
+                {
+                    "type": "ColumnSet",
+                    "separator": true,
+                    "style": "default",
+                    "bleed": true,
+                    "columns": [{
+                        "type": "Column",
+                        "width": "stretch",
+                        "items": [{
+                                "type": "TextBlock",
+                                "text": "Es gibt aktuell keine Tickets.",
+                                "horizontalAlignment": "Center",
+                                "isSubtle": true,
+                                "wrap": true
+                            }
+                        ],
+                        "separator": true,
+                        "verticalContentAlignment": "Center"
+                    }]
+                }      
+            {% endif %}    
+            ]
+		}
+	]
+}

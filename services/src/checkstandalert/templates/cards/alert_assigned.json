@@ -1,0 +1,44 @@
+{
+    "type": "AdaptiveCard",
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.3",
+    "body": [
+        {
+            "type": "Container",
+            "items": [
+                {
+                    "type": "Image",
+                    "url": "https://gitlab.com/Hasanakhuy/public/-/raw/master/bilder_ac/schwarzIT.png",
+                    "horizontalAlignment": "Center",
+                    "separator": true
+                },
+                {
+                    "type": "Image",
+                    "url": "https://gitlab.com/Hasanakhuy/public/-/raw/master/bilder_ac/best2_.png",
+                    "spacing": "Medium",
+                    "horizontalAlignment": "Center",
+                    "separator": true
+                }
+            ],
+            "separator": true
+        },
+        {
+            "type": "Container",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "Die Kassenanfrage wurde an {{ employee.surname }} zugewiesen.",
+                    "separator": true,
+                    "horizontalAlignment": "Center",
+                    "wrap": true,
+                    "fontType": "Default",
+                    "isSubtle": true,
+                    "size": "Medium",
+                    "maxLines": 3,
+                    "weight": "Bolder"
+                }
+            ],
+            "separator": true
+        }
+    ]
+}

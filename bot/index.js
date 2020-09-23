@@ -10,7 +10,7 @@ const restify = require('restify');
 const { BotFrameworkAdapter } = require('botbuilder');
 
 // This bot's main dialog.
-const { AdaptiveCardsBot } = require('./src/bots/adaptiveCardBots');
+const { AdaptiveCardsBot } = require('./src/adaptiveCardBots');
 // Import required bot configuration.
 const ENV_FILE = path.join(__dirname, '.env');
 dotenv.config({ path: ENV_FILE });

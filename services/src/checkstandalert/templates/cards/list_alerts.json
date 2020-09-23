@@ -1,0 +1,82 @@
+{
+	"type": "AdaptiveCard",
+	"$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+	"version": "1.3",
+	"body": [{
+			"type": "Container",
+			"items": [{
+					"type": "Image",
+					"url": "https://gitlab.com/Hasanakhuy/public/-/raw/master/bilder_ac/schwarzIT.png",
+					"horizontalAlignment": "Center",
+					"separator": true
+				},
+				{
+					"type": "Image",
+					"url": "https://gitlab.com/Hasanakhuy/public/-/raw/master/bilder_ac/ListeIcon.jpg",
+					"spacing": "Medium",
+					"horizontalAlignment": "Center",
+					"separator": true
+				}
+			]
+		},
+		{
+			"type": "Container",
+			"separator": true,
+			"items": [
+            {% if alerts %}
+                {% for alert in alerts %}
+                {
+                    "type": "ColumnSet",
+                    "separator": true,
+                    "style": "default",
+                    "bleed": true,
+                    "columns": [{
+                        "type": "Column",
+                        "width": "stretch",
+                        "items": [{
+                                "type": "TextBlock",
+                                "text": "{{ alert.description }}",
+                                "horizontalAlignment": "Center",
+                                "isSubtle": true,
+                                "wrap": true
+                            },
+                            {
+                                "type": "TextBlock",
+                                "text": "{{ alert.created_at }}",
+                                "horizontalAlignment": "Center",
+                                "wrap": true,
+                                "isSubtle": true
+                            }
+                        ],
+                        "separator": true,
+                        "verticalContentAlignment": "Center"
+                    }]
+                }            
+                {% if not forloop.last %},{% endif %}
+                {% endfor %}  
+            {% else %}
+                {
+                    "type": "ColumnSet",
+                    "separator": true,
+                    "style": "default",
+                    "bleed": true,
+                    "columns": [{
+                        "type": "Column",
+                        "width": "stretch",
+                        "items": [{
+                                "type": "TextBlock",
+                                "text": "Es gibt aktuell keine Kassen Anfragen.",
+                                "horizontalAlignment": "Center",
+                                "isSubtle": true,
+                                "wrap": true
+                            }
+                        ],
+                        "separator": true,
+                        "verticalContentAlignment": "Center"
+                    }]
+                }      
+            {% endif %}    
+            ]
+		}
+	]
+}

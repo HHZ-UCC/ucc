@@ -1,0 +1,245 @@
+{
+  "ruleChain": {
+    "additionalInfo": null,
+    "name": "Root Rule Chain",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": false,
+    "configuration": null
+  },
+  "metadata": {
+    "firstNodeIndex": 10,
+    "nodes": [
+      {
+        "additionalInfo": {
+          "layoutY": 543,
+          "layoutX": 57
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "check checkstandalert",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "return metadata.deviceType == \"Checkstand-Button\";"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutY": 538,
+          "layoutX": 330
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetOriginatorFieldsNode",
+        "name": "add fields",
+        "debugMode": true,
+        "configuration": {
+          "fieldsMapping": {
+            "id": "id"
+          }
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutY": 531,
+          "layoutX": 832
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Map Device Data",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "var data = {\n    device : metadata,\n    content : msg\n}\nreturn {msg: data, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutY": 521,
+          "layoutX": 1097
+        },
+        "type": "org.thingsboard.rule.engine.kafka.TbKafkaNode",
+        "name": "Send checkstandalert to kafka",
+        "debugMode": true,
+        "configuration": {
+          "retries": 0,
+          "kafkaHeadersCharset": "UTF-8",
+          "keySerializer": "org.apache.kafka.common.serialization.StringSerializer",
+          "linger": 0,
+          "batchSize": 16384,
+          "valueSerializer": "org.apache.kafka.common.serialization.StringSerializer",
+          "bootstrapServers": "kafka:9093",
+          "addMetadataKeyValuesAsKafkaHeaders": true,
+          "acks": "-1",
+          "topicPattern": "checkstandalert",
+          "bufferMemory": 33554432,
+          "otherProperties": {}
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutY": 441,
+          "layoutX": 63
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbJsFilterNode",
+        "name": "check waage",
+        "debugMode": false,
+        "configuration": {
+          "jsScript": "return metadata.deviceType == \"waage\";"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutY": 293,
+          "layoutX": 222
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbOriginatorTypeFilterNode",
+        "name": "If device",
+        "debugMode": true,
+        "configuration": {
+          "originatorTypes": [
+            "DEVICE"
+          ]
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutY": 434,
+          "layoutX": 596
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Device Attributes",
+        "debugMode": true,
+        "configuration": {
+          "clientAttributeNames": [],
+          "serverAttributeNames": [],
+          "sharedAttributeNames": [
+            "location"
+          ],
+          "tellFailureIfAbsent": false,
+          "getLatestValueWithTs": false,
+          "latestTsKeyNames": []
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutY": 436,
+          "layoutX": 336
+        },
+        "type": "org.thingsboard.rule.engine.metadata.TbGetOriginatorFieldsNode",
+        "name": "add fields",
+        "debugMode": true,
+        "configuration": {
+          "fieldsMapping": {
+            "id": "id"
+          }
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutY": 429,
+          "layoutX": 838
+        },
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Map Device Data",
+        "debugMode": true,
+        "configuration": {
+          "jsScript": "var data = {\n    device : metadata,\n    content : msg\n}\nreturn {msg: data, metadata: metadata, msgType: msgType};"
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutY": 419,
+          "layoutX": 1103
+        },
+        "type": "org.thingsboard.rule.engine.kafka.TbKafkaNode",
+        "name": "Send ticket to kafka",
+        "debugMode": true,
+        "configuration": {
+          "retries": 0,
+          "kafkaHeadersCharset": "UTF-8",
+          "keySerializer": "org.apache.kafka.common.serialization.StringSerializer",
+          "linger": 0,
+          "batchSize": 16384,
+          "valueSerializer": "org.apache.kafka.common.serialization.StringSerializer",
+          "bootstrapServers": "kafka:9093",
+          "addMetadataKeyValuesAsKafkaHeaders": true,
+          "acks": "-1",
+          "topicPattern": "tickets",
+          "bufferMemory": 33554432,
+          "otherProperties": {}
+        }
+      },
+      {
+        "additionalInfo": {
+          "layoutY": 149,
+          "layoutX": 347
+        },
+        "type": "org.thingsboard.rule.engine.filter.TbMsgTypeSwitchNode",
+        "name": "Message Type Switch",
+        "debugMode": false,
+        "configuration": {
+          "version": 0
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 0,
+        "toIndex": 1,
+        "type": "True"
+      },
+      {
+        "fromIndex": 1,
+        "toIndex": 2,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 3,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 3,
+        "type": "Failure"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 7,
+        "type": "True"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 4,
+        "type": "True"
+      },
+      {
+        "fromIndex": 5,
+        "toIndex": 0,
+        "type": "True"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 8,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 7,
+        "toIndex": 6,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 8,
+        "toIndex": 9,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 8,
+        "toIndex": 9,
+        "type": "Failure"
+      },
+      {
+        "fromIndex": 10,
+        "toIndex": 5,
+        "type": "Post attributes"
+      }
+    ],
+    "ruleChainConnections": null
+  }
+}

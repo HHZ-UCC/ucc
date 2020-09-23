@@ -1,0 +1,25 @@
+name: Ansible Playbook
+on: [push]
+
+jobs:
+  ansible_playbook_job:
+    runs-on: ubuntu-latest
+    name: Execute Playbook
+    steps:
+      - uses: actions/checkout@v1
+      - name: Execute Playbook Action Step
+        id: Execution
+        uses: saubermacherag/ansible-playbook-docker-action@v1.4
+        env:
+          ANSIBLE_STDOUT_CALLBACK: debug
+          ANSIBLE_FORCE_COLOR: true
+        with:
+          playbookName: ".ansible/site.yml"
+          inventoryFile: ".ansible/inventory/hosts"
+          requirementsFile: ".ansible/requirements.yml"
+          rolesPath: ".ansible/roles"
+          keyFile: ".ansible/key/id_rsa"
+          keyFileVaultPass: ${{ secrets.VAULT_SECRET }}
+          # extraFile: ".ansible/extra.yml"
+          # extraVars: "-e my_first_extra=${{ github.actor }} -e my_second_one=${{ github.sha }}"
+          verbosity: "vv"

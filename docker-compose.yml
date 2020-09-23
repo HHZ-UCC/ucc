@@ -3,7 +3,7 @@ version: '3.8'
 services:
 
   nginx:
-    image: nginx:${NGINX_VERSION}
+    build: ./nginx
     container_name: nginx
     networks: 
     - local
@@ -11,10 +11,14 @@ services:
     - "80:80"
     - "443:443"
     restart: always
+    environment:
+      HOSTNAME: ${HOSTNAME}
     volumes:
-      - ./nginx/reload.sh:/reload.sh
-      - ./nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
-      - ./nginx/etc/letsencrypt/:/etc/letsencrypt/
+      - /etc/letsencrypt/:/etc/letsencrypt/
+    depends_on:
+      - thingsboard
+      - application
+      - ucc-bot
 
   postgres-thingsboard:
     image: "postgres:${POSTGRES_VERSION}"
@@ -22,9 +26,9 @@ services:
     networks: 
     - local
     environment:
-      - POSTGRES_USER=${DATABASE_USER}
-      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
-      - POSTGRES_DB=${DATABASE_SCHEMA}
+        POSTGRES_USER: ${DATABASE_USER}
+        POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+        POSTGRES_DB: ${DATABASE_SCHEMA}
     expose:
       - "5432"
     volumes:
@@ -56,7 +60,8 @@ services:
     environment:
       MicrosoftAppId: ${MICROSOFT_APP_ID}
       MicrosoftAppPassword: ${MICROSOFT_APP_PASSWORD}
-    command: /bin/sh -c "while sleep 1000; do :; done"
+      HOST: ${HOST}
+    #command: /bin/sh -c "while sleep 1000; do :; done"
     volumes:
       - .:/workspace:cached
     expose:
@@ -67,7 +72,12 @@ services:
     container_name: application
     networks: 
     - local
-    command: /bin/sh -c "while sleep 1000; do :; done"
+    # command: /bin/sh -c "while sleep 1000; do :; done"
+    environment:
+      DEBUG: "False"
+      HOST: ${HOST}
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
+      ENABLE_KAFKA_CONSUMER: "True"
     volumes:
       - .:/workspace:cached
     expose:
@@ -100,7 +110,7 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       # Create Kafka topics "NAME:PARTITION:REPLICAS,..."
-      KAFKA_CREATE_TOPICS: "tickets:1:1,kassen_alert:1:1"
+      KAFKA_CREATE_TOPICS: "tickets:1:1,checkstandalert:1:1"
 
 volumes:
     pgdata_thingsboard:

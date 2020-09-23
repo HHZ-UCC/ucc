@@ -1,0 +1,106 @@
+---
+- include_vars:
+    file: templates/things-board-rule-chain.json
+    name: rule_chain_body
+
+
+- name: Get thingsboard authentication token
+  uri:
+    url: "{{ HOST }}/api/auth/login"
+    body:
+      username: "{{ THINGSBOARD_USER }}"
+      password: "{{ THINGSBOARD_PASSWORD }}"
+    body_format: json
+    status_code: [200]
+    method: POST
+    return_content: yes
+  register: access_token
+  until: access_token.status == 200
+  retries: 10
+  delay: 10
+
+- name: Set access token as variable
+  set_fact:
+    auth_token: "Bearer {{ access_token.json.token }}"
+
+# Creat the rule chain
+- name: Get root rule chain
+  uri:
+    url: "{{ HOST }}/api/ruleChains?limit=10"
+    body_format: json
+    return_content: yes
+    status_code: [200]
+    headers:
+      X-Authorization: "{{ auth_token }}"
+  register: root_rule_chain
+  # failed_when: "'root' not in root_rule_chain.json"
+
+- name: Log rule jain
+  debug: 
+    msg: "{{ root_rule_chain.json  }}"
+
+- name: Extract root rule chain id
+  set_fact: 
+    root_rule_chain_id: "{{ root_rule_chain.json | json_query('data[?root==`true`].id.id | [0] ') }}"
+    root_rule_chain_metadata: "{{ rule_chain_body | json_query('metadata') | combine({ 'ruleChainId': { 'entityType': 'RULE_CHAIN', 'id': '{{ root_rule_chain_id }}' } }) }}"
+
+- name: "Print root rule chain metadata"
+  debug: 
+    msg: "{{ root_rule_chain_metadata }}"
+
+- name: Update root rule chain metadata
+  uri:
+    url: "{{HOST}}/api/ruleChain/metadata"
+    body: "{{ root_rule_chain_metadata }}"
+    body_format: json
+    method: POST
+    return_content: yes
+    status_code: [200]
+    headers:
+      X-Authorization: "{{ auth_token }}"
+
+## Create the device
+- include_vars:
+    file: templates/device.json
+    name: device_body
+
+- name: Check if device exists
+  uri:
+    url: "{{ HOST }}/api/tenant/devices?deviceName={{ device_name }}"
+    method: GET
+    return_content: yes
+    status_code: [200, 404]
+    headers:
+      X-Authorization: "{{ auth_token }}"
+  register: get_device_response
+  vars:
+    device_name: Obstwaage
+
+- name: Setup device
+  block: 
+    - name: Create device
+      uri:
+        url: "{{ HOST }}/api/device?accessToken={{ device_access_token }}"
+        body: "{{ device_body }}"
+        body_format: json
+        method: POST
+        return_content: yes
+        status_code: [200]
+        headers:
+          X-Authorization: "{{ auth_token }}"
+      register: device_response
+      vars:
+        device_access_token: obstwaage
+
+    - name: Create device attributes
+      uri: 
+        url: "{{ HOST }}/api/plugins/telemetry/DEVICE/{{ device_id }}/SHARED_SCOPE"
+        body_format: json
+        body: "{{ device_attributes_payload }}"
+        method: POST
+        headers:
+          X-Authorization: "{{ auth_token }}"
+      vars:
+        device_id: "{{ device_response.json.id.id }}"
+        device_attributes_payload: "{ 'location': 'Obstabteilung'}"
+  when: get_device_response.status == 404
