@@ -67,6 +67,6 @@
       delay: 10
       vars:
         device_id: "{{ device_response.json.id.id }}"
-        device_attributes_payload: { '{{ item.attributes.key }}': '{{ item.attributes.value }}'}
+        device_attributes_payload: { 'location': '{{ item.attributes.value }}'}
       when: item.attributes is defined
   when: get_device_response.status == 404
