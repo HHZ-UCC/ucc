@@ -1,0 +1,72 @@
+- name: Get thingsboard authentication token
+  uri:
+    url: "{{ HOST }}/api/auth/login"
+    body:
+      username: "{{ THINGSBOARD_USER }}"
+      password: "{{ THINGSBOARD_PASSWORD }}"
+    body_format: json
+    status_code: [200]
+    method: POST
+    return_content: yes
+  register: access_token
+  until: access_token.status == 200
+  retries: 3
+  delay: 10
+
+- name: Set access token as variable
+  set_fact:
+    auth_token: "Bearer {{ access_token.json.token }}"
+
+## Create the device
+- name: Check if device exists
+  uri:
+    url: "{{ HOST }}/api/tenant/devices?deviceName={{ item.name }}"
+    method: GET
+    return_content: yes
+    status_code: [200, 404]
+    headers:
+      X-Authorization: "{{ auth_token }}"
+  register: get_device_response
+  until: get_device_response.status == 200 or get_device_response.status == 404
+  retries: 3
+  delay: 10
+
+- debug: 
+    msg: "{{ get_device_response }}"
+
+- name: Setup device
+  block: 
+    - name: Create device
+      uri:
+        url: "{{ HOST }}/api/device?accessToken={{ item.token }}"
+        body: { "name": "{{ item.name }}","type": "{{ item.type }}" }
+        body_format: json
+        method: POST
+        return_content: yes
+        status_code: [200]
+        headers:
+          X-Authorization: "{{ auth_token }}"
+      register: device_response
+      until: device_response.status == 200
+      retries: 3
+      delay: 10
+
+    - name: Create device attributes
+      uri: 
+        url: "{{ HOST }}/api/plugins/telemetry/DEVICE/{{ device_id }}/SHARED_SCOPE"
+        body_format: json
+        body: "{{ device_attributes_payload }}"
+        method: POST
+        return_content: yes
+        status_code: [200]
+        headers:
+          X-Authorization: "{{ auth_token }}"
+      register: device_attributes_response
+      until: device_attributes_response.status == 200
+      retries: 3
+      delay: 10
+      vars:
+        device_id: "{{ device_response.json.id.id }}"
+        device_attributes_payload: { '{{ item.attributes.key }}': '{{ item.attributes.value }}'}
+      when: item.attributes is defined
+  when: get_device_response.status == 404

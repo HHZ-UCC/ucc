@@ -3,7 +3,6 @@
     file: templates/things-board-rule-chain.json
     name: rule_chain_body
 
-
 - name: Get thingsboard authentication token
   uri:
     url: "{{ HOST }}/api/auth/login"
@@ -16,7 +15,7 @@
     return_content: yes
   register: access_token
   until: access_token.status == 200
-  retries: 10
+  retries: 30
   delay: 10
 
 - name: Set access token as variable
@@ -33,7 +32,10 @@
     headers:
       X-Authorization: "{{ auth_token }}"
   register: root_rule_chain
-  # failed_when: "'root' not in root_rule_chain.json"
+  until: root_rule_chain.status == 200
+  retries: 3
+  delay: 10
+
 
 - name: Log rule jain
   debug: 
@@ -58,49 +60,22 @@
     status_code: [200]
     headers:
       X-Authorization: "{{ auth_token }}"
-
-## Create the device
-- include_vars:
-    file: templates/device.json
-    name: device_body
-
-- name: Check if device exists
-  uri:
-    url: "{{ HOST }}/api/tenant/devices?deviceName={{ device_name }}"
-    method: GET
-    return_content: yes
-    status_code: [200, 404]
-    headers:
-      X-Authorization: "{{ auth_token }}"
-  register: get_device_response
-  vars:
-    device_name: Obstwaage
-
-- name: Setup device
-  block: 
-    - name: Create device
-      uri:
-        url: "{{ HOST }}/api/device?accessToken={{ device_access_token }}"
-        body: "{{ device_body }}"
-        body_format: json
-        method: POST
-        return_content: yes
-        status_code: [200]
-        headers:
-          X-Authorization: "{{ auth_token }}"
-      register: device_response
-      vars:
-        device_access_token: obstwaage
-
-    - name: Create device attributes
-      uri: 
-        url: "{{ HOST }}/api/plugins/telemetry/DEVICE/{{ device_id }}/SHARED_SCOPE"
-        body_format: json
-        body: "{{ device_attributes_payload }}"
-        method: POST
-        headers:
-          X-Authorization: "{{ auth_token }}"
-      vars:
-        device_id: "{{ device_response.json.id.id }}"
-        device_attributes_payload: "{ 'location': 'Obstabteilung'}"
-  when: get_device_response.status == 404
+  register: root_rule_chain_metadata_response
+  until: root_rule_chain_metadata_response.status == 200
+  retries: 3
+  delay: 10
+  
+- name: Setup devices
+  vars: 
+    devices: 
+    - name: Obstwaage
+      type: waage
+      token: obstwaage
+      attributes: 
+        key: location
+        value: Obstabteilung
+    - name: Kassenbutton
+      type: Checkstand-Button 
+      token: kassenbutton
+  include_tasks: setup_thingsboard_devices.yml
+  loop: "{{ devices }}"
