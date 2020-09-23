@@ -71,7 +71,7 @@
     - name: Obstwaage
       type: waage
       token: obstwaage
-      attributes: 
+      attributes:
         key: location
         value: Obstabteilung
     - name: Kassenbutton
