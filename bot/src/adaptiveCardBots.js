@@ -55,6 +55,7 @@ class AdaptiveCardsBot extends ActivityHandler {
 
     async handleMessage(activity) {
         const userId = activity.from.id;
+        // Content of acivity.value
         // activity.value:
         // {
         //     target : 'http://',
