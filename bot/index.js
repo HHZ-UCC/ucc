@@ -77,15 +77,8 @@ server.post('/api/notify', async (req, res) => {
     for (const conversationReference of Object.values(conversationReferences)) {
         adapter.continueConversation(conversationReference, async turnContext => {
             await turnContext.sendActivity(myBot.getCard(body));
-            // await myBot.run(turnContext);
         });
     }
-    res.setHeader('Content-Type', 'text/html');
     res.writeHead(200);
-    res.write('<html><body><h1>Message received.</h1></body></html>');
     res.end();
 });
-
-server.get('/public/*', restify.plugins.serveStatic({
-    directory: __dirname
-}));
