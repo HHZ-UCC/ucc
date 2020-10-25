@@ -8,13 +8,13 @@
             "items": [
                 {
                     "type": "Image",
-                    "url": "https://gitlab.com/Hasanakhuy/public/-/raw/master/bilder_ac/schwarzIT.png",
+                    "url": "{{ host }}/services/static/schwarzIT.png",
                     "horizontalAlignment": "Center",
                     "separator": true
                 },
                 {
                     "type": "Image",
-                    "url": "https://gitlab.com/Hasanakhuy/public/-/raw/master/bilder_ac/best2_.png",
+                    "url": "{{ host }}/services/static/best2_.png",
                     "spacing": "Medium",
                     "horizontalAlignment": "Center",
                     "separator": true

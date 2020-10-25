@@ -9,20 +9,20 @@
             "items": [
                 {
                     "type": "Image",
-                    "url": "https://gitlab.com/Hasanakhuy/public/-/raw/master/bilder_ac/schwarzIT.png",
+                    "url": "{{ host }}/services/static/schwarzIT.png",
                     "horizontalAlignment": "Center",
                     "separator": true
                 },
                 {
                     "type": "Image",
-                    "url": "https://gitlab.com/Hasanakhuy/public/-/raw/master/bilder_ac/kasse.png",
+                    "url": "{{ host }}/services/static/kasse.png",
                     "spacing": "Medium",
                     "horizontalAlignment": "Center",
                     "separator": true
                 },
                 {
                     "type": "Image",
-                    "url": "https://gitlab.com/Hasanakhuy/public/-/raw/master/bilder_ac/anstehend.png",
+                    "url": "{{ host }}/services/static/anstehend.png",
                     "horizontalAlignment": "Center"
                 }
             ],

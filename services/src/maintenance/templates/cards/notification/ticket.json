@@ -22,20 +22,20 @@
             "items": [
                 {
                     "type": "Image",
-                    "url": "https://gitlab.com/Hasanakhuy/public/-/raw/master/bilder_ac/schwarzIT.png",
+                    "url": "{{ host }}/services/static/schwarzIT.png",
                     "horizontalAlignment": "Center",
                     "separator": true
                 },
                 {
                     "type": "Image",
-                    "url": "https://gitlab.com/Hasanakhuy/public/-/raw/master/bilder_ac/Waage.png",
+                    "url": "{{ host }}/services/static/Waage.png",
                     "spacing": "Medium",
                     "horizontalAlignment": "Center",
                     "separator": true
                 },
                 {
                     "type": "Image",
-                    "url": "https://gitlab.com/Hasanakhuy/public/-/raw/master/bilder_ac/anstehend.png",
+                    "url": "{{ host }}/services/static/anstehend.png",
                     "horizontalAlignment": "Center"
                 }
             ]
@@ -73,7 +73,7 @@
                             "items": [
                                 {
                                     "type": "Image",
-                                    "url": "https://gitlab.com/Hasanakhuy/public/-/raw/master/bilder_ac/location.png",
+                                    "url": "{{ host }}/services/static/location.png",
                                     "horizontalAlignment": "Center",
                                     "spacing": "Medium"
                                 },
@@ -94,7 +94,7 @@
                             "items": [
                                 {
                                     "type": "Image",
-                                    "url": "https://gitlab.com/Hasanakhuy/public/-/raw/master/bilder_ac/datum.png",
+                                    "url": "{{ host }}/services/static/datum.png",
                                     "horizontalAlignment": "Center"
                                 },
                                 {
