@@ -1,22 +1,10 @@
 import logging
 
-from django.shortcuts import render
-from django.core.serializers.json import DjangoJSONEncoder
-
+from django.conf import settings
 from django.http import HttpResponse
 
 from django.template.loader import render_to_string
-from django.utils import timezone
-
-import json
-
-from rest_framework import status, serializers
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-
 from .services import RegistryService
-# Create your views here.
-import json
 
 registry_service = RegistryService()
 host = settings.HOST
