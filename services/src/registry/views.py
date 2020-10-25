@@ -1,9 +1,10 @@
 import logging
 
 from django.conf import settings
+from rest_framework.decorators import api_view
 from django.http import HttpResponse
-
 from django.template.loader import render_to_string
+
 from .services import RegistryService
 
 registry_service = RegistryService()
