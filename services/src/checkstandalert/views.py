@@ -51,12 +51,6 @@ def list_alerts(request):
     response = render_to_string('cards/list_alerts.json', {'host': host, 'alerts' : alerts})
     return HttpResponse(response, content_type='application/json')
 
-@api_view(['GET'])
-def notification(request): 
-    alertService = AlertService()
-    alertService.on_message({})
-    return Response(status=status.HTTP_200_OK)
-
 class PayloadValidator(serializers.Serializer):
     alertId = serializers.CharField(required=True, max_length=250)
     type = serializers.CharField(required=True, max_length=50)
@@ -68,37 +62,3 @@ class UserValidator(serializers.Serializer):
 class BotActionValidator(serializers.Serializer):
     payload = PayloadValidator()
     user = UserValidator()
-
-
-
-# @api_view(['GET'])
-# def test(request):
-#     data = """{
-#         "device": {
-#             "deviceType": "waage",
-#             "shared_location": "Obstabteilung",
-#             "id": "30080bb0-d513-11ea-8c9b-b1fb594c51a9",
-#             "deviceName": "Obstwaage"
-#         },
-#         "content": {
-#             "status": "ok",
-#             "cartridge": 50,
-#             "paper": 67
-#         }
-#     }"""
-    
-#     messagePayload = json.loads(data)
-#     devicePayload = messagePayload["device"]
-#     device, created = Device.objects.update_or_create(
-#         defaults={
-#             'external_id': devicePayload["id"],
-#             'type': devicePayload["deviceType"],
-#             'location': devicePayload["shared_location"],
-#             'created_at': timezone.now()
-#         }
-#     )
-    
-#     ticket = Ticket(description="Drucker patrone ausgegangen", status="offen", fk_device=device, created_at=timezone.now() )
-#     ticket.save()
-#     return Response(status=status.HTTP_200_OK)
-

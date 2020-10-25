@@ -24,7 +24,7 @@ class TicketsService:
                     'created_at': timezone.now()
                 }
             )
-            # TODO use description from (ThingsBoard)
+           
             ticket = Ticket(description="Drucker patrone ausgegangen", status="offen", fk_device=device, created_at=timezone.now() )
             ticket.save()
             
@@ -34,18 +34,3 @@ class TicketsService:
             requests.post(settings.BOT_SERVICE_URL, data=payload, headers={'Content-Type':'application/json'})
         except Exception as e:
             print("An exception occurred " + str(e))
-
-
-# {
-# 	"device": {
-# 		"deviceType": "waage",
-# 		"shared_location": "Obstabteilung",
-# 		"id": "30080bb0-d513-11ea-8c9b-b1fb594c51a9",
-# 		"deviceName": "Obstwaage"
-# 	},
-# 	"content": {
-# 		"status": "ok",
-# 		"cartridge": 50,
-# 		"paper": 67
-# 	}
-# }
