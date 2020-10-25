@@ -16,6 +16,7 @@ class TicketsService:
             print("value=%s" % ( message) )
             messagePayload = json.loads(message)
             devicePayload = messagePayload["device"]
+            contentPayload = messagePayload["content"]
             device, created = Device.objects.update_or_create(
                 defaults={
                     'external_id': devicePayload["id"],
@@ -25,7 +26,7 @@ class TicketsService:
                 }
             )
            
-            ticket = Ticket(description="Drucker patrone ausgegangen", status="offen", fk_device=device, created_at=timezone.now() )
+            ticket = Ticket(description=contentPayload.warning, status="offen", fk_device=device, created_at=timezone.now() )
             ticket.save()
             
             host = settings.HOST
