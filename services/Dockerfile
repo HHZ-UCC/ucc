@@ -14,9 +14,8 @@ RUN pip install --upgrade pip \
 
 WORKDIR /usr/src/app/src/
 
-RUN python manage.py collectstatic --noinput \
-    && python manage.py migrate
+RUN python manage.py collectstatic --noinput
 
 EXPOSE 8000
 
-CMD [ "gunicorn", "-b", "0.0.0.0:8000", "main.wsgi"]
+CMD ["sh","-c","python manage.py migrate && gunicorn -b 0.0.0.0:8000 main.wsgi"]
