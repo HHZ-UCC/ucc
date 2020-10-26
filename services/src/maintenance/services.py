@@ -26,7 +26,7 @@ class TicketsService:
                 }
             )
            
-            ticket = Ticket(description=contentPayload.warning, status="offen", fk_device=device, created_at=timezone.now() )
+            ticket = Ticket(description=contentPayload["warning"], status="offen", fk_device=device, created_at=timezone.now() )
             ticket.save()
             
             host = settings.HOST

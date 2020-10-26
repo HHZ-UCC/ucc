@@ -139,7 +139,7 @@
         "name": "Map Device Data",
         "debugMode": true,
         "configuration": {
-          "jsScript": "\nmsg.warning = \"Drucker patrone ausgegangen\"\n\nvar data = {\n    device : metadata,\n    content : msg\n}\n\n\nreturn {msg: data, metadata: metadata, msgType: msgType};"
+          "jsScript": "msg = {\n    warning: \"Drucker patrone ausgegangen\"\n}\n\n\nvar data = {\n    device : metadata,\n    content : msg\n}\n\nreturn {msg: data, metadata: metadata, msgType: msgType};"
         }
       },
       {
