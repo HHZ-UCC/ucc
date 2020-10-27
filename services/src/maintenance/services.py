@@ -16,6 +16,7 @@ class TicketsService:
             print("value=%s" % ( message) )
             messagePayload = json.loads(message)
             devicePayload = messagePayload["device"]
+            contentPayload = messagePayload["content"]
             device, created = Device.objects.update_or_create(
                 defaults={
                     'external_id': devicePayload["id"],
@@ -24,8 +25,8 @@ class TicketsService:
                     'created_at': timezone.now()
                 }
             )
-            # TODO use description from (ThingsBoard)
-            ticket = Ticket(description="Drucker patrone ausgegangen", status="offen", fk_device=device, created_at=timezone.now() )
+           
+            ticket = Ticket(description=contentPayload["warning"], status="offen", fk_device=device, created_at=timezone.now() )
             ticket.save()
             
             host = settings.HOST
@@ -34,18 +35,3 @@ class TicketsService:
             requests.post(settings.BOT_SERVICE_URL, data=payload, headers={'Content-Type':'application/json'})
         except Exception as e:
             print("An exception occurred " + str(e))
-
-
-# {
-# 	"device": {
-# 		"deviceType": "waage",
-# 		"shared_location": "Obstabteilung",
-# 		"id": "30080bb0-d513-11ea-8c9b-b1fb594c51a9",
-# 		"deviceName": "Obstwaage"
-# 	},
-# 	"content": {
-# 		"status": "ok",
-# 		"cartridge": 50,
-# 		"paper": 67
-# 	}
-# }

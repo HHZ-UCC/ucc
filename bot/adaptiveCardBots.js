@@ -10,6 +10,9 @@ const host = process.env.HOST;
 const services_url = `${host}/services/registry/bot/action`
 const WELCOME_TEXT = 'This bot will introduce you to Adaptive Cards. Type anything to see an Adaptive Card.';
 
+
+// Sends a post request to the provided url containing the provided body
+// and returns the body of the response
 const callBotAction = async (url, body) => {
     try {
         const headers = {
@@ -55,6 +58,7 @@ class AdaptiveCardsBot extends ActivityHandler {
 
     async handleMessage(activity) {
         const userId = activity.from.id;
+        // Content of acivity.value
         // activity.value:
         // {
         //     target : 'http://',
@@ -64,7 +68,11 @@ class AdaptiveCardsBot extends ActivityHandler {
         // }
         const userName = activity.from.userName;
         console.log(`Receivied message from user ${ userId } : ${ userName }`);
+        // Checks if a text was entered by the user or not
         if (this.isUndefined(activity.text)) {
+            // No text was entered. Instead a Adaptive Card interaction was done.
+            // Proceed by calling the target in the activiy value with the payload provided.
+
             const target = activity.value.target;
             const payload = activity.value.payload;
             const user = {
@@ -85,6 +93,7 @@ class AdaptiveCardsBot extends ActivityHandler {
                 };
             }
         } else {
+            // A Text was entered by the user. Call the registry service and provide the response to the User.
             const cardResponse = await callBotAction(services_url, {});
             return {
                 data: {},

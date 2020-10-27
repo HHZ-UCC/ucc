@@ -66,26 +66,3 @@ class UserValidator(serializers.Serializer):
 class BotActionValidator(serializers.Serializer):
     payload = PayloadValidator()
     user = UserValidator()
-
-
-
-@api_view(['GET'])
-def notification(request):
-    data = """{
-        "device": {
-            "deviceType": "waage",
-            "shared_location": "Obstabteilung",
-            "id": "30080bb0-d513-11ea-8c9b-b1fb594c51a9",
-            "deviceName": "Obstwaage"
-        },
-        "content": {
-            "status": "ok",
-            "cartridge": 50,
-            "paper": 67
-        }
-    }"""
-    
-    ticketService = TicketsService()
-    ticketService.on_message(data)
-    return Response(status=status.HTTP_200_OK)
-

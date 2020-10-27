@@ -61,7 +61,6 @@ services:
       MicrosoftAppId: ${MICROSOFT_APP_ID}
       MicrosoftAppPassword: ${MICROSOFT_APP_PASSWORD}
       HOST: ${HOST}
-    #command: /bin/sh -c "while sleep 1000; do :; done"
     volumes:
       - .:/workspace:cached
     expose:
@@ -72,11 +71,12 @@ services:
     container_name: application
     networks: 
     - local
-    # command: /bin/sh -c "while sleep 1000; do :; done"
     environment:
       DEBUG: "False"
       HOST: ${HOST}
       DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
+      DJANGO_ROOT_USER: ${DJANGO_ROOT_USER}
+      DJANGO_ROOT_USER_PASSWORD: ${DJANGO_ROOT_USER_PASSWORD}
       ENABLE_KAFKA_CONSUMER: "True"
     volumes:
       - .:/workspace:cached

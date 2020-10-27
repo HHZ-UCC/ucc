@@ -10,7 +10,7 @@ const restify = require('restify');
 const { BotFrameworkAdapter } = require('botbuilder');
 
 // This bot's main dialog.
-const { AdaptiveCardsBot } = require('./src/adaptiveCardBots');
+const { AdaptiveCardsBot } = require('./adaptiveCardBots');
 // Import required bot configuration.
 const ENV_FILE = path.join(__dirname, '.env');
 dotenv.config({ path: ENV_FILE });
@@ -28,8 +28,8 @@ server.listen(process.env.port || process.env.PORT || 3978, () => {
 // Create adapter.
 // See https://aka.ms/about-bot-adapter to learn more about how bots work.
 const adapter = new BotFrameworkAdapter({
-    appId: '612bcf63-a526-417b-96b0-aafdddd37286',
-    appPassword: 'Ign9Qk4e.0s6E_zo-DL7~Q7_HsiP6fJk7U',
+    appId: process.env.MicrosoftAppId,
+    appPassword: process.env.MicrosoftAppPassword,
     channelService: process.env.ChannelService,
     openIdMetadata: process.env.BotOpenIdMetadata
 });
@@ -54,21 +54,30 @@ adapter.onTurnError = async (context, error) => {
     await context.sendActivity('To continue to run this bot, please fix the bot source code.');
 };
 
+
+// This variable contains all connected users. 
+// The users references are kept in memory.
 const conversationReferences = {};
+
+
 // Create the main dialog.
 const myBot = new AdaptiveCardsBot(conversationReferences);
 
-// Listen for incoming requests.
+
+// Register the required /api/messages API Endpoints for the Bot Framework
 server.opts('/api/messages', (req, res) => {
 });
 
+// This endpoint is called by Microsoft Teams Backend on Client interaction
 server.post('/api/messages', (req, res) => {
     adapter.processActivity(req, res, async (context) => {
-        // Route to main dialog.
+        // Route to the actual bot implementation
         await myBot.run(context);
     });
 });
 
+// This endpoint is called by Services that wants to send 
+// Adaptive Cards to the Teams users.
 server.post('/api/notify', async (req, res) => {
     console.log('request received');
     const body = req.body;
@@ -76,16 +85,11 @@ server.post('/api/notify', async (req, res) => {
 
     for (const conversationReference of Object.values(conversationReferences)) {
         adapter.continueConversation(conversationReference, async turnContext => {
+            // Send the card to the Teams Users
             await turnContext.sendActivity(myBot.getCard(body));
-            // await myBot.run(turnContext);
         });
     }
-    res.setHeader('Content-Type', 'text/html');
+    // Respond with a success statuscode
     res.writeHead(200);
-    res.write('<html><body><h1>Message received.</h1></body></html>');
     res.end();
 });
-
-server.get('/public/*', restify.plugins.serveStatic({
-    directory: __dirname
-}));
