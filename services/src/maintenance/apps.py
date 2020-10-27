@@ -17,9 +17,12 @@ logger = logging.getLogger(__name__)
 
 class MaintenanceConfig(AppConfig):
     name = 'maintenance'
-       
-    @classmethod
-    def consumer(cls): 
+    
+    def ready(self):
+        if settings.ENABLE_KAFKA_CONSUMER:
+            threading.Thread(target=self.consumer).start()
+
+    def consumer(self):
         while True:
             try: 
                 from maintenance.services import TicketsService
@@ -43,10 +46,6 @@ class MaintenanceConfig(AppConfig):
                 pass
             else:
                 break
-
-    @classmethod
-    def start_consumer(cls):
-        threading.Thread(target=self.consumer).start()
 
     def get_registry_info(self):
         host = settings.HOST
