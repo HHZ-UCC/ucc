@@ -16,12 +16,9 @@ logger = logging.getLogger(__name__)
 
 class CheckstandalertConfig(AppConfig):
     name = 'checkstandalert'
-
-    def ready(self):
-        if settings.ENABLE_KAFKA_CONSUMER:
-            threading.Thread(target=self.consumer).start()
     
-    def consumer(self):
+    @classmethod
+    def consumer(cls):
         while True:
             try: 
                 from checkstandalert.services import AlertService
@@ -45,6 +42,10 @@ class CheckstandalertConfig(AppConfig):
                 pass
             else:
                 break
+
+    @classmethod
+    def start_consumer(cls):
+        threading.Thread(target=CheckstandalertConfig.consumer()).start()
 
     def get_registry_info(self):
         host = settings.HOST
