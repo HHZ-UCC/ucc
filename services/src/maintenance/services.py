@@ -25,12 +25,19 @@ class TicketsService:
                     'created_at': timezone.now()
                 }
             )
-           
+            
+            checkDeviceType = devicePayload["deviceType"]
+
             ticket = Ticket(description=contentPayload["warning"], status="offen", fk_device=device, created_at=timezone.now() )
             ticket.save()
             
             host = settings.HOST
-            payload = render_to_string('../templates/cards/notification/ticket.json', {'ticket': ticket, 'host' : host}).replace("\n", "")
+
+            if checkDeviceType == "Pfandautomat":
+                payload = render_to_string('../templates/cards/notification/ticketDepositMachine.json', {'ticket': ticket, 'host' : host}).replace("\n", "")
+            else:
+                payload = render_to_string('../templates/cards/notification/ticket.json', {'ticket': ticket, 'host' : host}).replace("\n", "")
+
             payload = json.dumps(json.loads(payload))
             requests.post(settings.BOT_SERVICE_URL, data=payload, headers={'Content-Type':'application/json'})
         except Exception as e:
